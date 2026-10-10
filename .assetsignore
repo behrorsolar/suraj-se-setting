@@ -1,0 +1,11 @@
+# These files belong in GitHub but should not be served as website assets.
+/wrangler.jsonc
+/README.md
+/.gitignore
+/.assetsignore
+/.git/**
+/.wrangler/**
+/.DS_Store
+/Thumbs.db
+/*.zip
+/global-green-energy-github-upload/**
