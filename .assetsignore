@@ -9,3 +9,5 @@
 /Thumbs.db
 /*.zip
 /global-green-energy-github-upload/**
+# High-resolution image drafts are retained locally, outside the deployed asset set.
+/images/bhiwadi-solar-sharing*.png

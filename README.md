@@ -16,6 +16,8 @@ favicon.svg         Browser tab icon
 robots.txt          Search engine instructions
 sitemap.xml         English and Hindi page addresses
 _headers            Cloudflare response headers
+wrangler.jsonc      Hosting setup for the existing globalgreenenergy Worker
+.assetsignore       Keeps hosting files and local archives out of the website
 README.md           This editing guide (optional)
 .gitignore          Local file exclusions (optional)
 ```
@@ -26,22 +28,27 @@ This replaces the previous generated version. Remove the old `build.mjs`, `check
 
 ## One-time Cloudflare change
 
-Use your existing **Cloudflare Pages** project, connected to this GitHub repository. Under the project's build settings, replace the old `npm run build` and `dist` settings:
+Use your existing **Cloudflare Worker named `globalgreenenergy`**, connected to **`behrorsolar/suraj-se-setting`**. This is a Workers project, not a Pages project. The owner-provided screenshots confirm the repository, Worker name, production branch and current settings. Under **Settings → Build → Build configuration**, use:
 
 | Setting | Value |
 | --- | --- |
-| Framework preset | None |
-| Build command | `exit 0` |
-| Build output directory | `.` (a single dot, meaning the repository root) |
-| Root directory | Leave blank |
-| Production branch | `main`, or your repository's actual production branch |
-| Automatic production branch deployments | Enabled |
+| Build command | Leave empty; remove `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Root directory | `/`, as currently shown in the dashboard, meaning the repository root |
+| Production branch | `main` |
+| Disable builds | Off |
+| Build watch paths — Include paths | `*`, as currently shown |
 
-Save these settings before committing the replacement files to the production branch. If the files were already committed, retry the deployment after saving the settings. Keep your existing custom domain connection.
+Save these settings before committing the replacement files to the production branch. `wrangler.jsonc` and `.assetsignore` must be uploaded beside `index.html` at the top level of the repository. If the HTML files were already uploaded, add these two hosting files and commit them after saving the build settings. That commit starts a deployment. If needed, go to **Deployments → View Build History**, open the latest build and choose **Retry build**.
+
+There is no build output directory field for this Workers setup. The `assets.directory` value in `wrangler.jsonc` points to the repository root. The configuration uses the exact existing Worker name and serves static assets directly, with a custom 404 page and trailing-slash directory URLs such as `/hi/`. No Worker JavaScript file, new Pages project, extra deploy hook, cron job, secret or binding is needed.
+
+Domain routing remains managed in the Cloudflare dashboard: the configuration has no `route` or `routes` field and uses `workers_dev: false`, following Cloudflare's guidance for dashboard-managed routes. Keep the existing `www.globalgreenenergy.co.in` domain connection and existing API token selection. `observability.enabled` preserves Worker logging. `.assetsignore` excludes the hosting configuration, this guide, ZIP archives and the locally extracted upload folder from public website assets.
 
 Cloudflare supports plain static HTML and automatically deploys GitHub changes:
-- https://developers.cloudflare.com/pages/framework-guides/deploy-anything/
-- https://developers.cloudflare.com/pages/configuration/git-integration/
+- https://developers.cloudflare.com/workers/ci-cd/builds/configuration/
+- https://developers.cloudflare.com/workers/static-assets/binding/
+- https://developers.cloudflare.com/workers/wrangler/configuration/
 
 These settings are instructions; they have not been changed in your Cloudflare account from this workspace.
 
@@ -75,13 +82,36 @@ The combined header logo has transparent margins removed and optimized WebP vers
 
 ### Contact and offices
 
-- Phone: **9911488881**; call links use `tel:+919911488881`.
-- WhatsApp: `https://wa.me/919911488881` (with a prefilled enquiry message).
-- Email: **behrorsolar@gmail.com**.
+- Phone: **9468688811**; call links use `tel:+919468688811`.
+- WhatsApp: `https://wa.me/919468688811` (with a prefilled enquiry message).
+- Email: **myadav@behrorsolar.in**.
 - Headquarters: Alwar — https://www.ggenergy.in/
 - Regional office: Behror–Neemrana — https://behrorsolar.in/
 - Bhiwadi city office: coming soon.
 
-Change these in both pages and in every related contact link. Company experience figures (558 installations, 2,672 kWp) are explicitly company-wide totals from the supplied PM Surya Ghar listing, not Bhiwadi-only totals. Review them when newer figures are available.
+Change these in both pages and in every related contact link. Company-wide PM Surya Ghar figures are 569 installations and 2,723 kWp installed capacity, based on the owner-supplied vendor listing screenshot dated 30 October 2026. These are not Bhiwadi-only totals. The gallery continues to use four supplied project examples.
 
 The primary domain is https://www.globalgreenenergy.co.in. If changing the domain, update the canonical and alternate links in both HTML pages, `robots.txt` and `sitemap.xml`. If adding a new page later, add its public address to `sitemap.xml`.
+
+
+## October 2026 website refresh
+
+English and Hindi pages now include the dedicated Bhiwadi call/WhatsApp number 9468688811 and myadav@behrorsolar.in. Desktop floating buttons become a bottom contact bar on small screens. Native HTML links and disclosure elements need no JavaScript.
+
+The sharing preview uses images/bhiwadi-solar-sharing.jpg (1200 × 630, approximately 160 KB). The WebP copy is optional for future use within a page. Do not preload the sharing image or display it as the hero solely for social previews.
+
+### Structured data
+
+Both HTML files contain a JSON-LD graph near the end of the head. It connects:
+- Global Green Energy: https://ggenergy.in/#business (the existing Alwar business identifier).
+- Behror Solar: https://behrorsolar.in/#organization, with parentOrganization referencing Global Green Energy.
+- The Bhiwadi website, its English/Hindi pages and two solar installation services.
+- A dedicated Bhiwadi ContactPoint with the new number/email and an explicitly scoped service area.
+
+The shared social profiles belong to the Behror Solar entity, and visible links explain the regional account relationship. No Bhiwadi street address, map pin, business hours or review rating is invented. The company-wide installation figures match the owner-supplied PM Surya Ghar listing. The Bhiwadi office remains marked as coming soon. FAQ content is present without promising a Google FAQ rich result.
+
+Changing a contact or location requires updating visible content and the JSON-LD in both HTML pages. Keep each page’s canonical URL on its own domain; company identity references do not replace canonical URLs.
+
+The other two sites have not been edited by this refresh. For consistency, Behror Solar’s existing Global Green Energy node and parentOrganization reference should use https://ggenergy.in/#business rather than a second company identifier on the Behror domain. Preserve the Behror Solar entity’s existing ID and its own office contact details.
+
+Upload the prepared refresh ZIP contents into the root of the existing GitHub repository and commit to main. Cloudflare keeps the same blank build command, npx wrangler deploy deploy command and / root directory. Saving files locally does not deploy them.
