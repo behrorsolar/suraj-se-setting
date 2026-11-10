@@ -36,7 +36,7 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
+      "@type": "HomeAndConstructionBusiness",
       "@id": "https://ggenergy.in/#business",
       "name": "Global Green Energy",
       "url": "https://ggenergy.in/",
@@ -80,28 +80,12 @@
           "name": "Neemrana"
         }
       ],
-      "subOrganization": {
-        "@id": "https://behrorsolar.in/#organization"
-      },
       "contactPoint": {
         "@id": "https://www.globalgreenenergy.co.in/#bhiwadi-contact"
-      }
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://behrorsolar.in/#organization",
-      "name": "Behror Solar",
-      "url": "https://behrorsolar.in/",
-      "description": "Global Green Energy’s regional solar platform for Behror, Neemrana and surrounding areas.",
-      "parentOrganization": {
-        "@id": "https://ggenergy.in/#business"
       },
-      "sameAs": [
-        "https://www.instagram.com/behrorsolar",
-        "https://www.facebook.com/behrorsolar",
-        "https://www.linkedin.com/company/behror-solar/",
-        "https://x.com/BehrorSolar"
-      ]
+      "subjectOf": {
+        "@id": "https://behrorsolar.in/#website"
+      }
     },
     {
       "@type": "ContactPoint",
@@ -151,7 +135,10 @@
       "inLanguage": [
         "en-IN",
         "hi-IN"
-      ]
+      ],
+      "about": {
+        "@id": "https://behrorsolar.in/about"
+      }
     },
     {
       "@type": "WebPage",
@@ -272,10 +259,22 @@
           "@id": "https://www.globalgreenenergy.co.in/#bhiwadi-contact"
         }
       }
+    },
+    {
+      "@type": "AboutPage",
+      "@id": "https://behrorsolar.in/about",
+      "name": "About Behror Solar",
+      "url": "https://behrorsolar.in/about"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://behrorsolar.in/#website",
+      "name": "Behror Solar",
+      "url": "https://behrorsolar.in/"
     }
   ]
 }
-    </script>
+</script>
   </head>
   <body>
     <a class="skip-link" href="#main">मुख्य सामग्री पर जाएँ</a>
